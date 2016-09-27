@@ -14,7 +14,10 @@ Homework 1 Group C
 """
 
 #question1
+
+##Prof G - Define this inside the function or as a parameter to the function
 dic1={"merry":"god","christmas":"jul","and":"och","happy":"gott","new":"nytt","year":"år"}#creat a dictionary
+
 def translate(English):
     """
     This function translate a list of English words into Swedish Words.
@@ -31,6 +34,8 @@ def translate(English):
         if k in dic1:
             Swedish.append(dic1[k]) #dic1[k] mathch the keys to their values in dict1. Return the mathced results and add them up to list.
         else:
+            ##Prof G - Nice way to handle, make sure to say why. There is an
+            ##Prof G - unstated assumption here.
             Swedish.append(k) #in case of words not in dictionary
     return(Swedish)
     
@@ -59,6 +64,8 @@ def char_freq(string):
 print(char_freq("abbabcbdbabdbdbabababcbcbab"))
 
 #question3
+
+##Prof G - Define inside the function or as a paraemter. 
 key={'a':'n', 'b':'o','c':'p', 'd':'q', 'e':'r', 'f':'s', 'g':'t', 'h':'u', 'i':'v',
 'j':'w', 'k':'x', 'l':'y', 'm':'z', 'n':'a', 'o':'b', 'p':'c',
 'q':'d', 'r':'e', 's':'f', 't':'g', 'u':'h', 'v':'i', 'w':'j',
@@ -109,8 +116,10 @@ def correct(string):
     string=re.sub('\ +',' ',string) #substitute one or more spaces between two words to one space
     string=re.sub('\.','. ',string) #substitute period end with no space to period end with one space
     return(string)
-    
-print(correct("This  is very funny    and cool.Indeed!"))
+
+##Prof G - Works well except there's an extra space if the period is followed
+##Prof G - by many spaces. See how I modified your test case below.    
+print(correct("This  is very.          funny    and cool.Indeed!"))
 
 #question5
 def make_3sg_form(word):
@@ -141,6 +150,7 @@ print(make_3sg_form('catch'))
 print(make_3sg_form('work'))
 
 #question6
+##Prof G - Define inside function or as a parameter
 con="qwrtzpsdfghjklyxcvbnm"
 vowel="aeiuo" 
 def make_ing_form(word):
@@ -156,6 +166,9 @@ def make_ing_form(word):
     Returns:
     Present participle form of the word.
     '''
+    ##Prof G - Good way to handle exceptions! Is there a way to handle these 
+    ##Prof G - in the logic? Are these the only exceptions in the English 
+    ##Prof G - language?
     exception=['be','see','flee','knee'] #exception, as rule a requires
     if word.endswith('ie'):
         word=word.replace(word[-2:],'y')+'ing' #if word end with "ie", replace with "y" and add "ing"
@@ -176,6 +189,8 @@ print(make_ing_form('work'))
 
 #question7
 from functools import reduce  #import reduce module
+
+##Prof G - Good use of reduce()!
 def max_in_list(list1):
     '''
     This function uses the higher order function reduce() to takes a list of numbers and returns the largest
@@ -209,8 +224,9 @@ def listlength(word):
     return length
     
 print(listlength(['I','love','python']))
-    
-def listlength(word):
+
+##Prof G - Nice alternative using map() generator    
+def listlength2(word):
     '''
     The following functions map a list of words into a list of integers
     representing the lengths of the correponding words. Three functions are written using the higher order
@@ -224,9 +240,10 @@ def listlength(word):
     '''
     return list((map(len,word))) #substitute the length of word to word in list using map function
     
-print(listlength(['I','love','python']))
-    
-def listlength(word):
+print(listlength2(['I','love','python']))
+
+##Prof G - Nice alernative using list comprehension  
+def listlength3(word):
     '''
     The following functions map a list of words into a list of integers
     representing the lengths of the correponding words. Three functions are written using list comprehensions.
@@ -240,7 +257,7 @@ def listlength(word):
     length=[len(i) for i in word] #put length of each word in "word" list into "length" list
     return length
     
-print(listlength(['I','love','python']))
+print(listlength3(['I','love','python']))
 
 #question9
 def find_longest_word(list1):
@@ -295,7 +312,8 @@ def translate(list1):
 print(translate(['merry','christmas','and','happy','new','year']))
 
 #question12
-def map(function,list1):
+##Prof G - Rename these functions to avoid ambiguity with built-in functions
+def mymap(function,list1):
     '''
     Implement the higher order functions map()
     Creat a new list, function old list, and add to new list.
@@ -311,9 +329,9 @@ def map(function,list1):
         newlist.append(function(i))#fuction(i) are added up to new list
     return newlist
     
-print(map(lambda x: x+1,[1,2,3,4,5]))
+print(mymap(lambda x: x+1,[1,2,3,4,5]))
     
-def filter(function,list1):
+def myfilter(function,list1):
     '''
     Implement the higher order functions map(), filter()
     Creat a new list. If function is true, add to new list.
@@ -330,9 +348,9 @@ def filter(function,list1):
             newlist.append(i) #if Ture, add to newlist
     return newlist
     
-print(filter(lambda x:x>4,[1,2,3,4,5,6]))
+print(myfilter(lambda x:x>4,[1,2,3,4,5,6]))
     
-def reduce(function,list1):
+def myreduce(function,list1):
     '''
     Implement the higher order functions reduce(). 
     Function i in list and its next.
@@ -348,4 +366,4 @@ def reduce(function,list1):
        accum=function(accum,i) #funciton accum and i, and let accum be the result
     return accum
 
-print(reduce(max,[1,2,3,4,5,6]))
+print(myreduce(max,[1,2,3,4,5,6]))
