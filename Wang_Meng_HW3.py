@@ -43,13 +43,14 @@ def plothist(list1):
         for i in list1: # then for each bin size
             a.hist(column = col, bins = i) # print a histogram
         
-        
+##Prof G - Poor choices for testing. Try 10, 50, 100        
 plothist([1,2,3])
         
 #question 5
 '''
 Plot a box plot for each of the numeric column.
 '''
+##Prof G - Nicer to have them all on the same graph
 import matplotlib.pyplot as plot
 plot.figure('sepal length box')#creat a new figure
 a['sepal length'].plot.box()#box plot
