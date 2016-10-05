@@ -6,8 +6,6 @@ Created on Sun Sep 18 08:25:23 2016
 """
 
 #question 1
-##Prof G - The function is specified to consider each line of the file, not the 
-##Prof G - entire file.
 def is_palindrome(file):
     '''
     This function is a palindrome recogniser that accepts a file
@@ -21,25 +19,22 @@ def is_palindrome(file):
     True if palindrome
     False if not palindrome
     '''
-    string=open(file).read()#open a file and read each line
+    string=open(file).read()#open a file
     string=string.lower()#lower case of each letter
     puncspace="`~!@#$%^&*()_-=+[]{}\|;:,<.>/? "
     for k in string:
         if k in puncspace:
             string=string.replace(k,'')#no spaces and punctuations in string
-    new=''#creat empty string
-    for i in range(len(string)):
-        new+=string[-i-1]#backward string
-    if new==string:#if the backward string equals to itself
-        print (True)
-    else:
-        print (False)
+    for m in string.split('\n'):#m represents each line
+        if m==m[::-1]:#if the backward string equals to itself
+            print (True)
+        else:
+            print (False)
 #e.g.        
 is_palindrome('name1.txt')#name1.txt is a local file
 
 
 #question 2
-##Prof G - Mostly coreect. Does not handle mixed case.
 def semord(file):
     '''
     This function works as a semordnilap recogniser that accepts a file name 
@@ -52,10 +47,16 @@ def semord(file):
     Returns
     A list containing paired words
     '''
-    list1=list(open(file).read().split())#open a text file and convert it into a list named list1
+    list1=list(open(file).read().split())#convert a text file into a list
+    puncspace="`~!@#$%^&*()_-=+[]{}\|;:,<.>/?"
+    for k in list1:
+        k=k.lower()#lower case of every character
+        if k in puncspace:
+            list1=list1.replace(k,'')#no punctuations in string
     new=[]#creat an empty list
     for i in list1:
-        if i[::-1] in list1 and len(i)>1: #if the length of word is not 1 and the backward word in the list
+        if i[::-1] in list1 and len(i)>1: #if the length of word is not 1 
+                                          #and the backward word in the list
             new.append(i+' '+i[::-1])#word+space+backward word
     return new
  #e.g.   
@@ -63,7 +64,6 @@ semord('name1.txt')#'name1.txt' is a local file
 
 
 #question 3
-##Prof G - Function fails due to Carriage Return (CR). 
 def char_freq_table(file):
     '''
     This function accepts a file name from the user, builds a frequency listing of
@@ -76,34 +76,25 @@ def char_freq_table(file):
     Returns:
     Dictionary(Table) showing frequency of characters
     '''
-    string=open(file).read()#open a file and read each line
-    dic={'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,
-    'k':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,'u':0,'v':0,
-    'w':0,'x':0,'y':0,'z':0}#formated table
+    string=open(file).read()#open a file and read lines
+    dic= {'a':0,'b':0,'c':0,'d':0,'e':0,'f':0,'g':0,'h':0,'i':0,'j':0,
+          'k':0,'l':0,'m':0,'n':0,'o':0,'p':0,'q':0,'r':0,'s':0,'t':0,
+          'u':0,'v':0,'w':0,'x':0,'y':0,'z':0}#formated dictionary
     string=string.lower()#lower case of each letter
-    puncspace="`~!@#$%^&*()_-=+[]{}\|;:,<.>/? "
-    for k in string:
-        if k in puncspace:
-            string=string.replace(k,'')#no spaces and punctuations in string
+    string=string.replace('\n','')
     for i in string:
+        if i in dic:
             dic[i]+=1#check frequency
-    return dic
+    import operator
+    sorted_dic = sorted(dic.items(), key=operator.itemgetter(0))#convert into a
+                                                                #list and sort
+    return sorted_dic
 #e.g.    
 char_freq_table('name1.txt')#'name1.txt' is a local file
 
 
 #question4
-d={'a':'alfa', 'b':'bravo', 'c':'charlie', 'd':'delta',
-'e':'echo', 'f':'foxtrot', 'g':'golf', 'h':'hotel',
-'i':'india', 'j':'juliett', 'k':'kilo', 'l':'lima',
-'m':'mike', 'n':'november', 'o':'oscar', 'p':'papa',
-'q':'quebec', 'r':'romeo', 's':'sierra', 't':'tango',
-'u':'uniform', 'v':'victor', 'w':'whiskey', 'x':'x-ray',
-'y':'yankee', 'z':'zulu'} #define dictionary d
-import os
-import time
-##Prof G - I get no sound? Also, it fails if you have a number in the string
-def speak_ICAO(string,ICAOpause,wordpause):
+def speak_ICAO(string,ICAOpause=1,wordpause=3):
     '''
     This function translate string into ICAO words and speak the out.
     Apart from the text to be spoken, the procedure also needs to accept two 
@@ -117,12 +108,20 @@ def speak_ICAO(string,ICAOpause,wordpause):
     Returns:
     Speak ICAO words
     '''
+    import os
+    import time
+    ICAO = {'a':'alfa', 'b':'bravo', 'c':'charlie', 'd':'delta', 'e':'echo', 
+ 	'f':'foxtrot', 'g':'golf', 'h':'hotel', 'i':'india', 'j':'juliett', 
+ 	'k':'kilo', 'l':'lima', 'm':'mike', 'n':'november', 'o':'oscar', 
+ 	'p':'papa', 'q':'quebec', 'r':'romeo', 's':'sierra', 't':'tango', 
+ 	'u':'uniform', 'v':'victor', 'w':'whiskey', 'x':'x-ray', 'y':'yankee', 
+ 	'z':'zulu'} # define dictionary dic
     for k in string.split():#split a string into words
         for i in k:#i represents each character
-            if i not in "`~!@#$%^&*()_-=+[]{}\|;:,<.>/?": #not punctuation
-                os.system('say'+d[i.lower()])#speak
+            if i not in "`~!@#$%^&*()_-=+[]{}\|;:,<.>/?0123456789": #only letter
+                os.system('say '+ICAO[i.lower()])#speak
                 time.sleep(ICAOpause)#pasue between ICAO words
-    time.sleep(wordpause)#pause between words
+        time.sleep(wordpause)#pause between words
 #e.g.
 speak_ICAO('When I met your mother',1,3)
 
@@ -167,10 +166,10 @@ def numberfile(file):
     A new file with numbered lines
     '''
     file1=open(file).readlines()#file1 is a list
-    ##Prof G - This will not work when I specify a full path name.
-    file2=open('new'+file,'w')#new empty file
+    file2=open('New.txt','w')#new empty file
     for i in range(len(file1)):
-        file2.write('line'+str(i+1)+': '+file1[i])#add 'line#: ' to the begining of each line, put them together into line2
+        file2.write('line'+str(i+1)+': '+file1[i])#add 'line#: ' to the 
+    #begining of each line, put them together into line2
     file2.close()#save and close
 #e.g.
 numberfile('name1.txt')#'name1.txt' is a local text file
@@ -212,10 +211,10 @@ Name and a number
 Returns:
 Strings and how many times taken
 '''
-##Prof G - This should be inside of a function and you should randomly generate
-##Prof G - a number between 1 and 20.
 name=input('What is your name? ')#input name
 chance=1
+import random
+b=random.randint(0,20)
 while True:
     number=int(input(name+', I am thinking of a number between 1 and 20. Take a guess. '))#input a number
     if number==18:
@@ -232,42 +231,41 @@ while True:
         
 
 #question 10
-'''
-lingo game: The object of the game is to find this word by guessing, and in
-return receive two kinds of clues: 1) the characters that are fully
-correct, with respect to identity as well as to position, and 2) the
-characters that are indeed present in the word, but which are
-placed in the wrong position. Write a program with which one can
-play Lingo. Use square brackets to mark characters correct in the
-sense of 1), and ordinary parentheses to mark characters correct in
-the sense of 2)
-
-Parameter:
-a word
-
-Returns:
-word after proceed
-'''
-##Prof G - This doesn't work for me.
-answer='tiger'#correct answer
-while True:
-    new=''
-    guess=input('')#guess a word
-    for i in range(len(guess)):
-        if guess[i]==answer[i]:#if identity and and position are both correct
-            new+='['+guess[i]+']'#add '[]' to the character
-        elif guess[i] in answer:#if only identity is correct
-            new+='('+guess[i]+')'#add '()' to the character
+def lingo(answer):
+    '''
+    lingo game: The object of the game is to find this word by guessing, and in
+    return receive two kinds of clues: 1) the characters that are fully
+    correct, with respect to identity as well as to position, and 2) the
+    characters that are indeed present in the word, but which are
+    placed in the wrong position. Write a program with which one can
+    play Lingo. Use square brackets to mark characters correct in the
+    sense of 1), and ordinary parentheses to mark characters correct in
+    the sense of 2)
+    
+    Parameter:
+    a word as answer
+    
+    Returns:
+    word after proceed
+    '''
+    while True:
+        new=''
+        guess=input('take a guess(only 5 characters!): ')#guess a word
+        for i in range(len(guess)):
+            if guess[i]==answer[i]:#if identity and and position are both correct
+                new+='['+guess[i]+']'#add '[]' to the character
+            elif guess[i] in answer:#if only identity is correct
+                new+='('+guess[i]+')'#add '()' to the character
+            else:
+                new+=guess[i]#if neither is correct, just add character
+        if guess==answer:
+            print('Clue: '+new)
+            break#stop the program
         else:
-            new+=guess[i]#if neither is correct, just add character
-    if guess==answer:
-        print('Clue: '+new)
-        break#stop the program
-    else:
-        print('Clue: '+new)
+            print('Clue: '+new)
 #e.g.
-#This program need to be saved and imported so it can run
-        
+lingo('catch')
+            
         
 #question 11
 punc='?!'
@@ -317,9 +315,7 @@ def splitter(file):
                 string=string[:i+1]+'\n'+string[i+2:] #else, add '\n' after period (new line)
         elif string[i] in punc:
             string=string[:i+1]+'\n'+string[i+2:]#for sentences end with '?' and '!', seperate new line
-    ##Prof G - It's not a good practice to overwrite the input file without 
-    ##Prof G - warning the user.       
-    file1=open(file,'w')#open for write
+    file1=open(file,'w')#open for write, warning: this function will overwrite your file
     file1.write(string)#write string into it
     file1.close()#save and close
 #e.g
