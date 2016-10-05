@@ -6,6 +6,8 @@ Created on Sun Sep 18 08:25:23 2016
 """
 
 #question 1
+##Prof G - The function is specified to consider each line of the file, not the 
+##Prof G - entire file.
 def is_palindrome(file):
     '''
     This function is a palindrome recogniser that accepts a file
@@ -37,6 +39,7 @@ is_palindrome('name1.txt')#name1.txt is a local file
 
 
 #question 2
+##Prof G - Mostly coreect. Does not handle mixed case.
 def semord(file):
     '''
     This function works as a semordnilap recogniser that accepts a file name 
@@ -60,6 +63,7 @@ semord('name1.txt')#'name1.txt' is a local file
 
 
 #question 3
+##Prof G - Function fails due to Carriage Return (CR). 
 def char_freq_table(file):
     '''
     This function accepts a file name from the user, builds a frequency listing of
@@ -98,6 +102,7 @@ d={'a':'alfa', 'b':'bravo', 'c':'charlie', 'd':'delta',
 'y':'yankee', 'z':'zulu'} #define dictionary d
 import os
 import time
+##Prof G - I get no sound? Also, it fails if you have a number in the string
 def speak_ICAO(string,ICAOpause,wordpause):
     '''
     This function translate string into ICAO words and speak the out.
@@ -162,6 +167,7 @@ def numberfile(file):
     A new file with numbered lines
     '''
     file1=open(file).readlines()#file1 is a list
+    ##Prof G - This will not work when I specify a full path name.
     file2=open('new'+file,'w')#new empty file
     for i in range(len(file1)):
         file2.write('line'+str(i+1)+': '+file1[i])#add 'line#: ' to the begining of each line, put them together into line2
@@ -206,6 +212,8 @@ Name and a number
 Returns:
 Strings and how many times taken
 '''
+##Prof G - This should be inside of a function and you should randomly generate
+##Prof G - a number between 1 and 20.
 name=input('What is your name? ')#input name
 chance=1
 while True:
@@ -240,6 +248,7 @@ a word
 Returns:
 word after proceed
 '''
+##Prof G - This doesn't work for me.
 answer='tiger'#correct answer
 while True:
     new=''
@@ -308,6 +317,8 @@ def splitter(file):
                 string=string[:i+1]+'\n'+string[i+2:] #else, add '\n' after period (new line)
         elif string[i] in punc:
             string=string[:i+1]+'\n'+string[i+2:]#for sentences end with '?' and '!', seperate new line
+    ##Prof G - It's not a good practice to overwrite the input file without 
+    ##Prof G - warning the user.       
     file1=open(file,'w')#open for write
     file1.write(string)#write string into it
     file1.close()#save and close
