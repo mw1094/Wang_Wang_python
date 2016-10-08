@@ -6,6 +6,14 @@ Created on Sun Sep 18 08:25:23 2016
 """
 
 #question 1
+##Prof G - Se the header doc below taken directly from the assignment. Notice
+##Prof G - that the specification is to print the line containing the 
+##Prof G - Palindrome to the screen. Your function returns a boolean.
+"""
+Write a version of a palindrome recogniser that accepts a file name from the 
+user, reads each line, and --->prints the line<--- to the screen if it is a 
+palindrome.
+"""
 def is_palindrome(file):
     '''
     This function is a palindrome recogniser that accepts a file
@@ -64,6 +72,7 @@ semord('name1.txt')#'name1.txt' is a local file
 
 
 #question 3
+##Prof G - Works well now!
 def char_freq_table(file):
     '''
     This function accepts a file name from the user, builds a frequency listing of
@@ -94,6 +103,7 @@ char_freq_table('name1.txt')#'name1.txt' is a local file
 
 
 #question4
+## Nice, works well now.
 def speak_ICAO(string,ICAOpause=1,wordpause=3):
     '''
     This function translate string into ICAO words and speak the out.
@@ -231,6 +241,8 @@ while True:
         
 
 #question 10
+##Prof G - Program works better but you should still add a prompt when the 
+##Prof G - word is guess propoerly. You program simply stops execution.
 def lingo(answer):
     '''
     lingo game: The object of the game is to find this word by guessing, and in
@@ -294,9 +306,14 @@ def splitter(file):
     
     Parameter:
     A file
+    **** This should be:
+    **** A text file. The input is overwritten with the sentances split into 
+    **** separate paragraphs (one sentance per paragraph)
     
     Returns:
     The modified file
+    **** This is not true. Above, under Parameter: you need to state that the 
+    **** input file is overwritten by the function. 
     '''
     string=open(file,'r').read()#open file for read
     for i in range(1,len(string)-2):
