@@ -6,40 +6,48 @@ Created on Sun Sep 18 08:25:23 2016
 """
 
 #question 1
-##Prof G - Se the header doc below taken directly from the assignment. Notice
-##Prof G - that the specification is to print the line containing the 
-##Prof G - Palindrome to the screen. Your function returns a boolean.
-"""
-Write a version of a palindrome recogniser that accepts a file name from the 
-user, reads each line, and --->prints the line<--- to the screen if it is a 
-palindrome.
-"""
-def is_palindrome(file):
-    '''
-    This function is a palindrome recogniser that accepts a file
-    name from the user, reads each line, and prints the line to the
-    screen if it is a palindrome.
+def is_palindrome(string):
+    '''    
+    This function is a palindrome recogniser that read a string and
+    return TRUE if it's a palindrome or FLASE if else.
     
     Parameter:
-    A file
+    A string
     
     Returns:
     True if palindrome
     False if not palindrome
     '''
-    string=open(file).read()#open a file
-    string=string.lower()#lower case of each letter
+    string = string.lower() #lower case of each letter
     puncspace="`~!@#$%^&*()_-=+[]{}\|;:,<.>/? "
     for k in string:
         if k in puncspace:
             string=string.replace(k,'')#no spaces and punctuations in string
-    for m in string.split('\n'):#m represents each line
-        if m==m[::-1]:#if the backward string equals to itself
-            print (True)
-        else:
-            print (False)
+    if not string.isalpha():
+        return False     # return false if there is non-character in it
+    if string[::-1] == string: # if the reverse is the same as itself
+        return True
+    else:
+        return False   
+
+def palindrome_file(file):
+    '''
+    This function palindrome_file() reads a file and apply palindrome function
+    to all lines then return lines that are palindrome
+    
+    Parameter:
+    A file
+    
+    Return:
+    Lines that are palindrome   
+    '''
+    file1 = open(file) # open a file
+    for line in file1.read().split('\n'): # read file by lines
+        if is_palindrome(line):
+            print(line) # print the line if it is a palindrome
+    return None
 #e.g.        
-is_palindrome('name1.txt')#name1.txt is a local file
+palindrome_file('name1.txt')#name1.txt is a local file
 
 
 #question 2
@@ -72,7 +80,6 @@ semord('name1.txt')#'name1.txt' is a local file
 
 
 #question 3
-##Prof G - Works well now!
 def char_freq_table(file):
     '''
     This function accepts a file name from the user, builds a frequency listing of
@@ -103,7 +110,6 @@ char_freq_table('name1.txt')#'name1.txt' is a local file
 
 
 #question4
-## Nice, works well now.
 def speak_ICAO(string,ICAOpause=1,wordpause=3):
     '''
     This function translate string into ICAO words and speak the out.
@@ -241,8 +247,6 @@ while True:
         
 
 #question 10
-##Prof G - Program works better but you should still add a prompt when the 
-##Prof G - word is guess propoerly. You program simply stops execution.
 def lingo(answer):
     '''
     lingo game: The object of the game is to find this word by guessing, and in
@@ -272,6 +276,7 @@ def lingo(answer):
                 new+=guess[i]#if neither is correct, just add character
         if guess==answer:
             print('Clue: '+new)
+            print('You are right! Good job!')
             break#stop the program
         else:
             print('Clue: '+new)
@@ -305,15 +310,10 @@ def splitter(file):
     and more periods) are probably not sentence boundaries.   
     
     Parameter:
-    A file
-    **** This should be:
-    **** A text file. The input is overwritten with the sentances split into 
-    **** separate paragraphs (one sentance per paragraph)
+    A text file (the input file will be overwritten by the function!)
     
     Returns:
-    The modified file
-    **** This is not true. Above, under Parameter: you need to state that the 
-    **** input file is overwritten by the function. 
+    A text file (the input file will be overwritten by the function!)
     '''
     string=open(file,'r').read()#open file for read
     for i in range(1,len(string)-2):
